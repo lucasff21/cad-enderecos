@@ -1,0 +1,23 @@
+
+  <div class="">
+    <h2 class="text-center">Criar conta</h2>
+
+    <form (ngSubmit)="onSubmit()" #form=""ngForm action="/login">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" name="email" id="email" [(ngModel)]="account.email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input type="password" class="form-control" name="password" id="password" [(ngModel)]="account.password" required>
+      </div>
+      <br>
+      <button type="submit" class="btn1 btn btn-primary btn-lock" >Criar conta</button>
+    </form>
+  </div>
+
+
+
+
+
+

@@ -1,0 +1,64 @@
+<table mat-table [dataSource]="enderecos" class="mat-elevation-z8">
+
+  <!-- Nome Column -->
+  <ng-container matColumnDef="nome">
+    <th mat-header-cell *matHeaderCellDef> Nome </th>
+    <td mat-cell *matCellDef="let endereco"> {{endereco.nome }} </td>
+  </ng-container>
+
+  <!-- Cep Column -->
+  <ng-container matColumnDef="cep">
+    <th mat-header-cell *matHeaderCellDef> CEP </th>
+    <td mat-cell *matCellDef="let endereco"> {{endereco.cep}} </td>
+  </ng-container>
+
+  <!-- Weight logradouro -->
+  <ng-container matColumnDef="logradouro">
+    <th mat-header-cell *matHeaderCellDef> Logradouro </th>
+    <td mat-cell *matCellDef="let endereco"> {{endereco.logradouro}} </td>
+  </ng-container>
+
+  <!-- Symbol complemento -->
+  <ng-container matColumnDef="complemento">
+    <th mat-header-cell *matHeaderCellDef> Complemento </th>
+    <td mat-cell *matCellDef="let endereco"> {{endereco.complemento}} </td>
+  </ng-container>
+
+  <!-- Symbol bairro -->
+  <ng-container matColumnDef="bairro">
+    <th mat-header-cell *matHeaderCellDef> Bairro </th>
+    <td mat-cell *matCellDef="let endereco"> {{endereco.bairro}} </td>
+  </ng-container>
+
+  <!-- Symbol localidade -->
+  <ng-container matColumnDef="localidade">
+    <th mat-header-cell *matHeaderCellDef> Localidade </th>
+    <td mat-cell *matCellDef="let endereco"> {{endereco.localidade}} </td>
+  </ng-container>
+
+  <!-- Symbol uF -->
+  <ng-container matColumnDef="uf">
+    <th mat-header-cell *matHeaderCellDef> UF </th>
+    <td mat-cell *matCellDef="let endereco"> {{endereco.uf}} </td>
+  </ng-container>
+
+  <!-- Actions Column -->
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let endereco"  class="action-column">
+      <!--  <button type="button" [routerLink]="['/editar', endereco.id]" class="btn btn-primary mr-1"> -->
+      <button type="button" (click)="onEdit(endereco)" class="btn btn-primary mr-1">
+        Alterar
+    </button>
+    <button type="button" class="btn btn-danger" (click)="onRemove(endereco)">
+        Excluir
+    </button>
+    </mat-cell>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+</table>

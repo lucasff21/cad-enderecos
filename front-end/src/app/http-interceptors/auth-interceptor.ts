@@ -1,0 +1,48 @@
+import { AccountService } from './../account/shared/account.service';
+import { Injectable } from '@angular/core';
+import {HttpRequest,HttpHandler,HttpEvent, HttpInterceptor, HttpErrorResponse} from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
+
+
+
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+
+  constructor(private accountService: AccountService) {}
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    const token = this.accountService.getAuthorizationToken();
+    let request: HttpRequest<any> = req;
+
+    if(token && !this.accountService.isTokenExpired(token)){
+      /* O request é imutavel, ou seja, não é possivel de mudar
+      Faço o clone para conseguir mudar as propiedades
+      Passo o token de autenticação no header
+      */
+      request = req.clone({
+        headers: req.headers.set('Authrization', `Bearer ${token}`)
+      });
+    }
+
+    //retorna o requets com o erro tratado
+    return next.handle(request)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+
+  private handleError(error: HttpErrorResponse){
+    if(error.error instanceof ErrorEvent){
+      // Erro de client-side ou de rede
+      console.error('Ocorreu um erro:', error.error.message)
+    } else {
+      //Erro retornando pelo backend
+      console.error(
+        `Código do erro ${error.status}, ` +
+        `Error: ${JSON.stringify(error.error)}`);
+    }
+    // retorna um observable com uma mensagem amigavel
+    return throwError('Ocorreu um erro, tente novamente');
+  }
+}
