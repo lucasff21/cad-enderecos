@@ -21,7 +21,6 @@ export class CreateAccountComponent implements OnInit {
   async onSubmit(){
     try{
       const result = await this.accountService.createAccount(this.account);
-
       this.router.navigate(['login']);
       console.log(result)
     }catch (error){

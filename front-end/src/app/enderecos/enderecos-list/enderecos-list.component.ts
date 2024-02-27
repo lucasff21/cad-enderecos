@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Endereco } from '../model/endereco';
 import { Router } from '@angular/router';
+import { EnderecosService } from '../services/enderecos.service';
 
 @Component({
   selector: 'app-enderecos-list',
@@ -17,9 +18,19 @@ export class EnderecosListComponent implements OnInit{
 
   constructor(
     private router: Router,
+    private enderecoService: EnderecosService,
+
   ){}
 
   ngOnInit(): void {
+  }
+
+  findAll(){
+    this.enderecoService.findAll().subscribe({
+      next: (endrecosList) => {
+        this.enderecos = endrecosList
+      }
+    })
   }
 
   onEdit(endereco: Endereco ){
@@ -28,6 +39,10 @@ export class EnderecosListComponent implements OnInit{
   }
 
   onRemove(endereco: Endereco){
-    this.remove.emit(endereco);
+    this.enderecoService.remove(endereco.id).subscribe({
+      next: () =>  {
+        this.findAll()
+      }
+    })
   }
 }
