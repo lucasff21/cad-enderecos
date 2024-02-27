@@ -33,7 +33,8 @@ public class SecurityConfiguration implements WebMvcConfigurer{
         			authorizeConfig.requestMatchers(HttpMethod.GET, "/api/auth/enderecos").permitAll();
         			authorizeConfig.requestMatchers(HttpMethod.POST,"/api/auth/enderecos").permitAll();
         			authorizeConfig.requestMatchers(HttpMethod.PUT,"/api/auth/enderecos/{id}").permitAll();
-        			authorizeConfig.requestMatchers(HttpMethod.DELETE,"/api/auth/enderecos/{id}").hasAnyAuthority("ADMIN");
+        			authorizeConfig.requestMatchers(HttpMethod.DELETE,"/api/auth/enderecos/{id}").permitAll();
+        			//authorizeConfig.requestMatchers(HttpMethod.DELETE,"/api/auth/enderecos/{id}").hasAnyAuthority("ADMIN");
         			authorizeConfig.anyRequest().authenticated();
         		}
         		)
